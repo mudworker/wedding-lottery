@@ -1,91 +1,63 @@
-.dropBall1 {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 60px;
-    height: 60px;
-    display: block;
-    background: url(../images/1.png) no-repeat;
-    background-size: contain;
-    animation: drop 1s ease-out forwards;
-    -webkit-animation: drop 1s ease-out forwards;
-}
-
-.dropBall2 {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 60px;
-    height: 60px;
-    display: block;
-    background: url(../images/2.png) no-repeat;
-    background-size: contain;
-    animation: drop 1s ease-out forwards;
-    -webkit-animation: drop 1s ease-out forwards;
-}
-
-.dropBall3 {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 60px;
-    height: 60px;
-    display: block;
-    background: url(../images/3.png) no-repeat;
-    background-size: contain;
-    animation: drop 1s ease-out forwards;
-    -webkit-animation: drop 1s ease-out forwards;
-}
-
-.dropBall4 {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 60px;
-    height: 60px;
-    display: block;
-    background: url(../images/4.png) no-repeat;
-    background-size: contain;
-    animation: drop 1s ease-out forwards;
-    -webkit-animation: drop 1s ease-out forwards;
-}
-
-@keyframes drop {
+@keyframes move {
     0% {
-        transform: scale(0.7);
-    }
-
-    50% {
-        transform: scale(1);
-    }
-
-    51% {
-        transform: translateY(0px);
+        transform: translateY(-90%);
+        filter: blur(2px);
     }
 
     100% {
-        transform: translateY(100px);
+        transform: translateY(1%);
+        filter: blur(2px);
     }
 }
 
-@-webkit-keyframes drop {
+@keyframes num-bounce {
     0% {
-        -webkit-transform: scale(0.7);
+        transform: translateY(calc(var(--num) * -9.09% - 7%));
+        filter: none;
+        /* 最后取消模糊效果 */
+    }
+
+    25% {
+        transform: translateY(calc(var(--num) * -9.09% + 3%));
     }
 
     50% {
-        -webkit-transform: scale(1);
+        transform: translateY(calc(var(--num) * -9.09% - 1%));
     }
 
-    51% {
-        -webkit-transform: translateY(0px);
+    70% {
+        transform: translateY(calc(var(--num) * -9.09% + 0.6%));
+    }
+
+    85% {
+        transform: translateY(calc(var(--num) * -9.09% - 0.3%));
     }
 
     100% {
-        -webkit-transform: translateY(100px);
+        transform: translateY(calc(var(--num) * -9.09%));
+        filter: none;
+        /* 最后取消模糊效果 */
+    }
+}
+
+@keyframes border-bounce {
+    25% {
+        transform: translateY(7%);
+    }
+
+    50% {
+        transform: translateY(-3%);
+    }
+
+    70% {
+        transform: translateY(4%);
+    }
+
+    85% {
+        transform: translateY(-1%);
+    }
+
+    100% {
+        transform: translateY(0);
     }
 }
