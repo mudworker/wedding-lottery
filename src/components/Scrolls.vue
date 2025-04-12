@@ -1,7 +1,6 @@
 <template>
     <div class="scolls">
-        <ScrollNum ref="snRef" v-for="(num, index) in numList" :key="index" :num="num" :delay="2 + index / 2"
-            :size="'large'" />
+        <ScrollNum ref="snRef" v-for="(num, index) in numList" :key="index" :num="num" :delay="2 + index / 2"/>
     </div>
 </template>
 
@@ -27,6 +26,5 @@ const numList = computed(() => {
 .scolls {
     display: flex;
     height: fit-content;
-    border: 1px solid #000;
 }
 </style>

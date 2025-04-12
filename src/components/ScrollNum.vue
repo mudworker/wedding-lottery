@@ -1,17 +1,8 @@
 <template>
     <div class="scroll-box border-animate" :style="scrollStyle" @animationend="handleAnimationEnd">
-        <ul ref="num" class="scroll-num" :class="{ animate: showAnimate }">
-            <li>0</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
-            <li>0</li>
+        <ul class="scroll-num" :class="{ animate: showAnimate }">
+            <li class="num" :class="'num' + (i - 1)" v-for="i of 10"></li>
+            <li class="num" :class="'num0'"></li>
         </ul>
     </div>
 </template>
@@ -22,18 +13,12 @@ import { useLotteryStore } from '../stores/lottery';
 
 const lotteryStore = useLotteryStore()
 
-const props = defineProps(["num", "delay", "size"])
+const props = defineProps(["num", "delay"])
 let showAnimate = ref(true)
 const scrollStyle = computed(() => {
-    const sizeMap = {
-        small: "20px",
-        medium: "36px",
-        large: "56px",
-    }[props.size];
     return {
         "--num": props.num, // CSS变量，提供到style使用
         "--delay": props.delay,
-        "--width": sizeMap,
     };
 })
 
@@ -49,20 +34,17 @@ watch(() => lotteryStore.isDrawing, (val) => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .scroll-box {
-    width: var(--width, 20px);
-    height: calc(var(--width, 20px) * 1.8);
-    /* color: #fff; */
-    font-size: calc(var(--width, 20px) * 1.1);
-    line-height: calc(var(--width, 20px) * 1.8);
+    --width: 50px;
+    --height: calc(var(--width) * 1.7);
+    width: var(--width);
+    height: var(--height);
     text-align: center;
-    /* border: 1px solid #fff; */
     border-radius: 5px;
-    /* margin-right: 30px; */
     overflow: hidden;
     flex-shrink: 0;
-    /* 保证不被压缩 */
+    /* background-color: red; */
 }
 
 .animate {
@@ -71,7 +53,7 @@ watch(() => lotteryStore.isDrawing, (val) => {
     /* forwards:停在动画的最后一帧 */
 }
 
-​ .border-animate {
+.border-animate {
     animation: border-bounce 1s calc(var(--delay) * 1s) forwards;
 }
 
@@ -80,5 +62,14 @@ watch(() => lotteryStore.isDrawing, (val) => {
     margin: 0;
     list-style: none;
     transform: translateY(calc(var(--num) * -9.09%));
+    /* height: 100%; */
+}
+
+.num {
+    background-size: auto 80%;
+    height: var(--height);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
 </style>

@@ -61,3 +61,115 @@
         transform: translateY(0);
     }
 }
+
+// 拉杆下拉动画
+@keyframes pull {
+    70% {
+        transform: translateY(70px) scale(1.1);
+    }
+
+    80% {
+        transform: translateY(70px) scale(1.1);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+//pop动画
+@keyframes popAniShow {
+    0% {
+        // opacity: 0;
+        transform: scale(.1);
+    }
+
+    100% {
+        // opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes popAni1 {
+    0% {
+        transform: scale(1);
+    }
+
+    20% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes popAni2 {
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes popAni3 {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes popAni4 {
+    0% {
+        transform: scale(1);
+    }
+
+    60% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes popAni5 {
+    0% {
+        transform: scale(1);
+    }
+
+    70% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes popAni6 {
+    0% {
+        transform: scale(1);
+    }
+
+    80% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

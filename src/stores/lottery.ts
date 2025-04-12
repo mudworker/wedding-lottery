@@ -5,10 +5,10 @@ import { defineStore } from 'pinia'
 export const useLotteryStore = defineStore('lottery', {
     state: () => ({
         isDrawing: true, // 是否正在抽奖
-        total: 40, // 总人数
+        total: 200, // 总人数
         drawFinishCount: 0, // 抽奖完成计数
-        drawCount: 10, // 抽奖的个数 每轮
-        drawRounds: 3, // 抽奖轮数
+        drawCount: 9, // 抽奖的个数 每轮
+        drawRounds: 8, // 抽奖轮数
         roundIndex: 1, // 当前是第几轮
 
         historyRecords: [], // 历史获奖记录
