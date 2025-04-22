@@ -14,8 +14,11 @@ import { useSoundStore } from './stores/sound';
 const soundStore = useSoundStore()
 
 // 注册所有音效
-soundStore.register('bgm', '/audios/bgm.mp3', { loop: true, volume: 0.3 })
-// soundStore.register('win', '/assets/audios/win.mp3')
+soundStore.register('bgm', '/audios/bgm.mp3', { loop: true, volume: 0.1 })
+soundStore.register('start', '/audios/start.mp3')
+soundStore.register('roll', '/audios/roll.mp3')
+soundStore.register('bo', '/audios/bo.mp3')
+soundStore.register('celebrate', '/audios/celebrate.mp3')
 
 onMounted(() => {
   soundStore.play('bgm')

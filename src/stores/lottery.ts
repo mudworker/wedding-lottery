@@ -11,6 +11,11 @@ export const useLotteryStore = defineStore('lottery', {
         drawRounds: 8, // 抽奖轮数
         roundIndex: 1, // 当前是第几轮
 
+        // 动画控制
+        stopDelay: 5, // 延迟n秒第一位数开始停止
+        stopInterval: .5, // 每一位数的停止间隔
+        celebrateDelay: 2, // 抽奖完毕后庆祝动画弹出延迟
+
         historyRecords: [], // 历史获奖记录
     }),
     actions: {
@@ -25,8 +30,9 @@ export const useLotteryStore = defineStore('lottery', {
         // 记录本轮抽奖结果
         recordRes(res) {
             this.roundIndex++
-            this.historyRecords.push(res)
-            storage.setItem('historyRecords', this.historyRecords)
+            let hr = [...this.historyRecords]
+            hr.push(res)
+            storage.setItem('historyRecords', hr)
             storage.setItem('roundIndex', this.roundIndex)
         },
         // 开启新的抽奖

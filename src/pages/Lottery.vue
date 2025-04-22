@@ -8,7 +8,7 @@
                 <div class="draw-part">
                     <div class="machine"></div>
                     <div ref="spainRef" class="spain" :class="{ 'isPull': isPull }" @click="handleLottery"></div>
-                    <div class="pops" v-if="!lotteryStore.isDrawing && !isPull && lotteryStore.roundIndex > 1">
+                    <div class="pops" v-if="isShowPops">
                         <div class="pop" :class="'pop' + i" v-for="i in 6"></div>
                     </div>
                     <Scrolls class="scroll" :class="'scroll' + i" v-for="(num, i) in resultList" :number="num" />
@@ -16,12 +16,14 @@
             </div>
             <div class="right">
                 <div class="history">
-                    <div class="round" v-for="(r, i) in lotteryStore.historyRecords">
-                        <div class>Round {{ i + 1 }}</div>
-                        <div class="res">
-                            <ResultNum v-for="n in r" :number="n"></ResultNum>
+                    <TransitionGroup name="history">
+                        <div class="round" v-for="(r, i) in lotteryStore.historyRecords" :key="i">
+                            <div class>Round {{ i + 1 }}</div>
+                            <div class="res">
+                                <ResultNum v-for="n in r" :number="n"></ResultNum>
+                            </div>
                         </div>
-                    </div>
+                    </TransitionGroup>
                 </div>
                 <div class="drop" @click="lotteryStore.restart">restart</div>
             </div>
@@ -35,6 +37,9 @@ import Scrolls from '../components/Scrolls.vue';
 import ResultNum from '../components/ResultNum.vue';
 import { useLotteryStore } from '../stores/lottery';
 import storage from '../utils/storage';
+import { useSoundStore } from '../stores/sound';
+
+const soundStore = useSoundStore()
 
 const lotteryStore = useLotteryStore()
 
@@ -45,6 +50,8 @@ let totalList: number[] = []
 // 控制手柄拉动动画
 const spainRef = ref(null)
 let isPull = ref(false)
+// 抽奖完毕后鲜花钱币显示
+let isShowPops = ref(false)
 
 function init() {
     // 初始化结果集合
@@ -72,19 +79,38 @@ function handleLottery() {
         console.log('已经结束了所有抽奖轮次！')
         return
     }
+    soundStore.play('start')
     isPull.value = true
+    isShowPops.value = false
+    // 拉杆复位
     spainRef.value.addEventListener('animationend', () => {
-        console.log(1111)
-        lotteryStore.isDrawing = true
-        isPull.value = false
-        let res: any = []
-        // 随机这一轮的所有号码
-        for (let i = 0; i < lotteryStore.drawCount; i++) {
-            res.push(handleDrawOne())
-        }
+        // 开始转动
+        setTimeout(() => {
+            lotteryStore.isDrawing = true
+            soundStore.play('roll')
+            isPull.value = false
+            let res: any = []
+            // 随机这一轮的所有号码
+            for (let i = 0; i < lotteryStore.drawCount; i++) {
+                res.push(handleDrawOne())
+            }
 
-        lotteryStore.recordRes(res)
-        resultList.value = res
+            // 记录历史数据
+            lotteryStore.recordRes(res)
+            resultList.value = res
+            setTimeout(() => {
+                soundStore.play('bo')
+                setTimeout(() => {
+                    soundStore.play('celebrate')
+                    // 弹出庆祝动画 + 显示历史记录
+                    setTimeout(() => {
+                        isShowPops.value = true
+                        lotteryStore.historyRecords.push(res)
+                    }, 1000)
+                }, lotteryStore.celebrateDelay * 1000)
+
+            }, lotteryStore.stopDelay * 1000)
+        }, 2000)
     }, { once: true })
 }
 
@@ -106,6 +132,23 @@ onMounted(() => {
 </script>
 
 <style lang='scss' scoped>
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.history-enter-active {
+    animation: bounce-in .5s ease;
+}
+
 .lottery {
     position: relative;
     margin: 0;
@@ -269,6 +312,8 @@ onMounted(() => {
 
         .right {
             width: 40%;
+            overflow-y: auto;
+            overflow-x: hidden;
 
             .history {
                 display: flex;

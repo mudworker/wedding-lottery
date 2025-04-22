@@ -1,13 +1,17 @@
 <template>
     <div class="scolls">
-        <ScrollNum ref="snRef" v-for="(num, index) in numList" :key="index" :num="num" :delay="2 + index / 2"/>
+        <ScrollNum ref="snRef" v-for="(num, index) in numList" :key="index" :num="num"
+            :delay="lotteryStore.stopDelay + index * lotteryStore.stopInterval" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import ScrollNum from './ScrollNum.vue';
+import { useLotteryStore } from '../stores/lottery'
 const props = defineProps(['number'])
+
+const lotteryStore = useLotteryStore()
 
 const numList = computed(() => {
     // 确保三位数
