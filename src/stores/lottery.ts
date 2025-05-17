@@ -12,7 +12,7 @@ export const useLotteryStore = defineStore('lottery', {
         roundIndex: 1, // 当前是第几轮
 
         // 动画控制
-        stopDelay: 5, // 延迟n秒第一位数开始停止
+        stopDelay: 3, // 延迟n秒第一位数开始停止
         stopInterval: .5, // 每一位数的停止间隔
         celebrateDelay: 2, // 抽奖完毕后庆祝动画弹出延迟
 
