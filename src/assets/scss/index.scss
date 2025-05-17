@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'HyFTwinkling';
+  src: url('../fonts/HyFTwinkling-2.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body,
 #app {
@@ -5,4 +12,29 @@ body,
   width: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'HyFTwinkling';
+}
+
+
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background-color: #ffbac8;
+  border-style: dashed;
+  border-color: transparent;
+  border-width: 3px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6c90;
+}
+
+
+::-webkit-scrollbar-track {
+  border-radius: 3px;
 }

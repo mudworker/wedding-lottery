@@ -1,5 +1,6 @@
 <template>
     <div class="lottery">
+        <div class="setting-btn" @click="isShowSetting = true"></div>
         <!-- 背景 -->
         <div class="bgs"></div>
         <!-- 抽奖 -->
@@ -14,20 +15,8 @@
                     <Scrolls class="scroll" :class="'scroll' + i" v-for="(num, i) in resultList" :number="num" />
                 </div>
             </div>
-            <div class="right">
-                <div class="history">
-                    <TransitionGroup name="history">
-                        <div class="round" v-for="(r, i) in lotteryStore.historyRecords" :key="i">
-                            <div class>Round {{ i + 1 }}</div>
-                            <div class="res">
-                                <ResultNum v-for="n in r" :number="n"></ResultNum>
-                            </div>
-                        </div>
-                    </TransitionGroup>
-                </div>
-                <div class="drop" @click="lotteryStore.restart">restart</div>
-            </div>
         </div>
+        <Setting v-if="isShowSetting" @handleClose="closeSetting"/>
     </div>
 </template>
 
@@ -35,6 +24,7 @@
 import { onMounted, ref } from 'vue'
 import Scrolls from '../components/Scrolls.vue';
 import ResultNum from '../components/ResultNum.vue';
+import Setting from '../components/Setting.vue'
 import { useLotteryStore } from '../stores/lottery';
 import storage from '../utils/storage';
 import { useSoundStore } from '../stores/sound';
@@ -124,6 +114,12 @@ function handleDrawOne() {
     return totalList.splice(i, 1)[0]
 }
 
+// 控制 setting 弹框
+let isShowSetting = ref(false)
+function closeSetting() {
+    isShowSetting.value = false
+}
+
 onMounted(() => {
     init()
 })
@@ -132,30 +128,27 @@ onMounted(() => {
 </script>
 
 <style lang='scss' scoped>
-@keyframes bounce-in {
-  0% {
-    opacity: 0;
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-.history-enter-active {
-    animation: bounce-in .5s ease;
-}
-
 .lottery {
     position: relative;
     margin: 0;
     padding: 0;
     height: 100%;
     width: 100%;
-    background-color: #f1d6ff;
+    // background-color: #f1d6ff;
+    background-image: url(../assets/images/bg.png);
+    background-size: 100% auto;
+
+    .setting-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 9;
+        cursor: pointer;
+        background-image: url(../assets/images/history.png);
+        width: 117px;
+        height: 101px;
+        background-size: 100% auto;
+    }
 
     .main {
         height: 100%;
@@ -308,32 +301,6 @@ onMounted(() => {
 
 
             }
-        }
-
-        .right {
-            width: 40%;
-            overflow-y: auto;
-            overflow-x: hidden;
-
-            .history {
-                display: flex;
-                flex-direction: column;
-                gap: 30px;
-
-                .round {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 30px;
-
-                    .res {
-                        display: flex;
-                        gap: 30px;
-                        flex-wrap: wrap;
-                    }
-                }
-            }
-
-            .drop {}
         }
     }
 

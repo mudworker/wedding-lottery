@@ -8,7 +8,7 @@ export const useLotteryStore = defineStore('lottery', {
         total: 200, // 总人数
         drawFinishCount: 0, // 抽奖完成计数
         drawCount: 9, // 抽奖的个数 每轮
-        drawRounds: 8, // 抽奖轮数
+        drawRounds: 9, // 抽奖轮数
         roundIndex: 1, // 当前是第几轮
 
         // 动画控制
